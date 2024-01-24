@@ -1,0 +1,165 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+# Set up
+
+I am assuming that this needs all of the packages required in the Rmd file from lab. 
+```{r}
+require(tidyverse)
+require(sf)
+require(tigris)
+require(geodata)
+require(terra)
+require(colorspace)
+require(tidyterra)
+require(ggnewscale)
+require(cowplot)
+require(rworldmap)
+require(lattice)
+require(raster)
+require(ggOceanMaps)
+require(rasterVis)
+
+# Read in all data
+A_sax_dist = st_read('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/redlist_species_data_7110df13-c1f4-4b2f-9342-598f925c5d03/data_0.shp')
+
+#unsure if this line is required
+#Sax = st_as_sf(A_sax_dist)
+
+A_tro_dist = st_read('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/redlist_species_data_48c00095-da02-43fa-a90d-5f9a41331177/data_0.shp')
+
+#read in vertnet locality data - this is the location of museum records for each species of interest
+occ = read.csv('~/Downloads/Abudefduf_sax_tro_vertnet-e7736bf57d094efdbc063509f61b2425.tsv', sep='\t')
+
+ggplot(occ, aes(x = occ$decimallatitude, y = occ$decimallongitude))
+
+#na.omit(occ$decimallatitude)
+occ %>% drop_na(decimallatitude)
+
+occSf = st_as_sf(occ, coords=c('decimallatitude', 'decimallongitude'), crs='+proj=utm +zone=10 +datum=NAD83 +units=m +no_defs +type=crs')
+
+plot(st_geometry(occSf))
+
+#create bbox based on locality records from vertnet
+studyArea = st_bbox(occ)
+
+#You could keep this to make the bbox not touch distributions, but I do want them to touch
+#studyArea_sax = studyArea_sax + c(-5, -5, 5, 5)
+#studyArea_tro = studyArea_tro + c(-5, -5, 5, 5)
+
+studyArea_sax = st_as_sfc(studyArea_sax)
+studyArea_tro = st_as_sfc(studyArea_tro)
+
+
+
+#basemap(limits = c(-15, -135, -50, 50), bathymetry = TRUE) + geom_sf(data = A_sax_dist, aes(color = "red")) + geom_sf(data = A_tro_dist, aes(color = "blue"))
+
+
+
+
+#Adding box around each study area
+#fill can be changed to the indicated color for "color"
+basemap(limits = c(-135, 45, -50, 50), bathymetry = FALSE) + 
+  geom_sf(data = studyArea_tro, fill=NA, color = "black") +
+  geom_sf(data = studyArea_sax, fill=NA, color = "black") +
+  geom_sf(data = A_tro_dist, fill = NA, color = '#795695') + 
+  geom_sf(data = A_sax_dist, fill = NA, color = '#eb6262')
+
+
+
+
+#map2 <- map1 + geom_sf(data = sfc12, aes(color = SCI_NAME))
+
+#map3<- map2 + geom_sf(data = A_tro_dist, aes(color = "blue"))
+
+#plot(st_geometry(A_sax_dist), col = "purple", border = 'grey', 
+#     axes = TRUE)
+
+#ggplot() + 
+#  geom_sf() + 
+#  geom_sf(data = A_tro_dist, fill = "#6fa8dc") + 
+#  geom_sf(data = A_sax_dist, fill = '#eb6262')
+
+
+```
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+# Plan for map
+My current idea for this is to take occurrence data and/or range data for Abudefduf and overlay that with sea surface temperature data. 
+
+Download desired species range data from iucnredlist.org and searching the species of interest (and downloading the shape file). 
+
+
+I think the point data would be vector, and the sea surface temperature would be raster. 
+Download SST for two different months in geoTiff (raster) format: https://neo.gsfc.nasa.gov/view.php?datasetId=MYD28M
+
+A third layer that could be added is a boundary/depiction of major ocean currents (i.e. gulf stream). Download data from: https://hub.arcgis.com/maps/beyondmaps::major-ocean-currents/about
+Major_Ocean_Currents_arrowPolys_30m_8
+
+
+# add raster layer to add sst
+```{r}
+sst <- rast('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/MYD28M_2023-08-01_rgb_720x360.TIFF')
+
+
+sst[is.na(sst)] = 0
+plot(sst)
+
+
+
+basemap(limits = c(-135, 45, -50, 50), bathymetry = FALSE) + 
+  geom_sf(data = studyArea_tro, fill=NA, color = "black") +
+  geom_sf(data = studyArea_sax, fill=NA, color = "black") +
+  geom_sf(data = A_tro_dist, fill = NA, color = '#795695') + 
+  geom_sf(data = A_sax_dist, fill = NA, color = '#eb6262')
+  
+
+gplot(sst) + 
+  geom_tile(aes(fill = value)) +
+  scale_fill_gradientn(colours = hcl.colors(n = 10, palette = "SunsetDark", rev = TRUE)) +
+  facet_wrap(~ variable) +
+  coord_equal()
+  
+#use ggplot to plot sst
+ggplot() + 
+  geom_spatraster(data = sst) +
+  scale_fill_gradient(low='blue', high='red', na.value = "yellow") 
+
+  
+basemap(limits = c(-135, 45, -50, 50), bathymetry = FALSE) +
+  geom_spatraster(data = sst_2) +
+  scale_fill_gradient(low='blue', high='red', na.value = "darkgreen") 
+
+
+
+#trying a new sst raster
+#https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.nodc:0077816
+sst_2 <- rast('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/2009-04_Pathv5.0_daynight_SST_monaprc.tif')
+plot(sst_2)
+
+sst2_crop <- crop(sst_2, A_sax_dist)
+plot(sst2_crop)
+
+#use ggplot to plot sst
+ggplot() + 
+  geom_spatraster(data = sst_2) +
+  scale_fill_gradient(low='darkblue', high='red') + 
+  
+  geom_sf(data = A_sax_dist, fill = '#eb6262', color = '#eb6262') + 
+  geom_sf(data = A_tro_dist, fill = '#795695', color = '#795695') 
+
+
+```
+
