@@ -1,15 +1,22 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
+# Week 2 Lab Assignment - Claire Tracy
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+## Overview
+I study the sergeant major damselfish (Abudefduf saxatilis) and the panamanian damselfish (Abudefduf troschelii). For this assignment I am mapping their entire ranges with sea surface temperature of the ocean to show the extents of their range and how that may relate with the environment. This rmd file will produce a zoomed in and zoomed out map showing the distribution of the two species obtained from the IUCN redlist (which has nice shapefiles for species distributions), occurrence data of both species (black points) downloaded from iNaturalist (to show how their ranges overly with publicly available occurrence data), and ocean sea surface temperature (SST) obtained from NOAA. The raster layer is the SST, and my vector elements include the shape files of the range distributions of both species (each an independent shape file), and the occurrence data of both species. 
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
-# Set up
 
-I am assuming that this needs all of the packages required in the Rmd file from lab. 
+A third layer that I am interested in adding in the future is a boundary/depiction of major ocean currents (i.e. gulf stream). Data is available in the github and was downloaded from here: https://hub.arcgis.com/maps/beyondmaps::major-ocean-currents/about. I however did not have more time to do it for this assignment so maybe in the future. 
+Major_Ocean_Currents_arrowPolys_30m_8
+
+
+## Getting set up
 ```{r}
+#I am assuming that this needs all of the packages required in the Rmd file from lab. 
 require(tidyverse)
 require(sf)
 require(tigris)
@@ -24,142 +31,121 @@ require(lattice)
 require(raster)
 require(ggOceanMaps)
 require(rasterVis)
+```
 
-# Read in all data
+
+
+## Read in all the data
+YOU WILL NEED TO CHANGE THE PATH ON LINES 52 AND 58, THOSE DATASETS DID NOT WORK TO PULL FROM GITHUB, BUT I LEFT THE ORIGINAL CODE BELOW COMMENTED OUT. 
+```{R}
+
+# Read in species distribution data downloaded from IUCN redlist
 A_sax_dist = st_read('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/redlist_species_data_7110df13-c1f4-4b2f-9342-598f925c5d03/data_0.shp')
-
-#unsure if this line is required
-#Sax = st_as_sf(A_sax_dist)
 
 A_tro_dist = st_read('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/redlist_species_data_48c00095-da02-43fa-a90d-5f9a41331177/data_0.shp')
 
-#read in vertnet locality data - this is the location of museum records for each species of interest
-occ = read.csv('~/Downloads/Abudefduf_sax_tro_vertnet-e7736bf57d094efdbc063509f61b2425.tsv', sep='\t')
-
-ggplot(occ, aes(x = occ$decimallatitude, y = occ$decimallongitude))
-
-#na.omit(occ$decimallatitude)
-occ %>% drop_na(decimallatitude)
-
-occSf = st_as_sf(occ, coords=c('decimallatitude', 'decimallongitude'), crs='+proj=utm +zone=10 +datum=NAD83 +units=m +no_defs +type=crs')
-
-plot(st_geometry(occSf))
-
-#create bbox based on locality records from vertnet
-studyArea = st_bbox(occ)
-
-#You could keep this to make the bbox not touch distributions, but I do want them to touch
-#studyArea_sax = studyArea_sax + c(-5, -5, 5, 5)
-#studyArea_tro = studyArea_tro + c(-5, -5, 5, 5)
-
-studyArea_sax = st_as_sfc(studyArea_sax)
-studyArea_tro = st_as_sfc(studyArea_tro)
+#read in inaturalist locality data - filtered to only research grade ids
+#occ = read.csv('~/Downloads/Abudefduf_sax_tro_vertnet-e7736bf57d094efdbc063509f61b2425.tsv', sep='\t')
 
 
+#CHANGE TO YOUR DIRECTORY IF NOT RUNNING FROM DOWNLOADS FOLDER
+occ_sax = read.csv('~/Downloads/observations-396470.csv')
+#Below is the command that should work pulling from github but isn't (the file isn't too large)
+#occ_sax = read.csv('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/observations-396470.csv')
 
+
+#CHANGE TO YOUR DIRECTORY IF NOT RUNNING FROM DOWNLOADS FOLDER
+occ_tro = read.csv('~/Downloads/observations-396472.csv')
+#Below is the command that should work pulling from github but isn't (the file isn't too large)
+#occ_tro = read.csv('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/observations-396472.csv')
+
+occ_comb = rbind(occ_sax, occ_tro)
+
+occ_comb_sf = st_as_sf(occ_comb, coords=c('longitude', 'latitude'), na.fail = FALSE, crs='+proj=longlat +datum=WGS84 +units=m +no_defs +type=crs')
+
+#occ_sax_Sf = st_as_sf(occ_sax, coords=c('longitude', 'latitude'), na.fail = FALSE, crs='+proj=longlat +datum=WGS84 +units=m +no_defs +type=crs')
+
+#occ_tro_Sf = st_as_sf(occ_tro, coords=c('longitude', 'latitude'), na.fail = FALSE, crs='+proj=longlat +datum=WGS84 +units=m +no_defs +type=crs')
+
+
+#plot(st_geometry(occ_comb_sf))
+
+#create bbox based on locality records from inat
+studyArea = st_bbox(occ_comb_sf)
+studyArea = studyArea +  c(-10, -10, 10, 10)
+studyArea = st_as_sfc(studyArea)
+
+#checking projections
+crs(occ_comb_sf, proj=T)
+crs(A_tro_dist, proj=T)
+
+
+
+#this command produces a nice map including bathymetry data of ocean if you don't need to add in a raster with SST, so I'm not taking it out of the script because I may use it in the future, but commented it out because it's not needed for this
 #basemap(limits = c(-15, -135, -50, 50), bathymetry = TRUE) + geom_sf(data = A_sax_dist, aes(color = "red")) + geom_sf(data = A_tro_dist, aes(color = "blue"))
-
 
 
 
 #Adding box around each study area
 #fill can be changed to the indicated color for "color"
-basemap(limits = c(-135, 45, -50, 50), bathymetry = FALSE) + 
-  geom_sf(data = studyArea_tro, fill=NA, color = "black") +
-  geom_sf(data = studyArea_sax, fill=NA, color = "black") +
-  geom_sf(data = A_tro_dist, fill = NA, color = '#795695') + 
-  geom_sf(data = A_sax_dist, fill = NA, color = '#eb6262')
 
-
-
-
-#map2 <- map1 + geom_sf(data = sfc12, aes(color = SCI_NAME))
-
-#map3<- map2 + geom_sf(data = A_tro_dist, aes(color = "blue"))
-
-#plot(st_geometry(A_sax_dist), col = "purple", border = 'grey', 
-#     axes = TRUE)
-
-#ggplot() + 
-#  geom_sf() + 
-#  geom_sf(data = A_tro_dist, fill = "#6fa8dc") + 
-#  geom_sf(data = A_sax_dist, fill = '#eb6262')
+#basemap(limits = c(-135, 45, -50, 50), bathymetry = TRUE) + 
+#  geom_sf(data = A_tro_dist, fill = '#795695', color = '#795695') + 
+#  geom_sf(data = A_sax_dist, fill = '#eb6262', color = '#eb6262') +
+#  geom_sf(data = occ_comb_sf, fill = "black", color = "black")
 
 
 ```
 
 
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
-
-# Plan for map
-My current idea for this is to take occurrence data and/or range data for Abudefduf and overlay that with sea surface temperature data. 
-
-Download desired species range data from iucnredlist.org and searching the species of interest (and downloading the shape file). 
 
 
-I think the point data would be vector, and the sea surface temperature would be raster. 
-Download SST for two different months in geoTiff (raster) format: https://neo.gsfc.nasa.gov/view.php?datasetId=MYD28M
 
-A third layer that could be added is a boundary/depiction of major ocean currents (i.e. gulf stream). Download data from: https://hub.arcgis.com/maps/beyondmaps::major-ocean-currents/about
-Major_Ocean_Currents_arrowPolys_30m_8
-
-
-# add raster layer to add sst
+## Adding raster layer to incorporate sea surface temperature (SST), and plotting zoomed out map with extent rectangle.
 ```{r}
-sst <- rast('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/MYD28M_2023-08-01_rgb_720x360.TIFF')
 
-
-sst[is.na(sst)] = 0
-plot(sst)
-
-
-
-basemap(limits = c(-135, 45, -50, 50), bathymetry = FALSE) + 
-  geom_sf(data = studyArea_tro, fill=NA, color = "black") +
-  geom_sf(data = studyArea_sax, fill=NA, color = "black") +
-  geom_sf(data = A_tro_dist, fill = NA, color = '#795695') + 
-  geom_sf(data = A_sax_dist, fill = NA, color = '#eb6262')
+#basemap(limits = c(-135, 45, -50, 50), bathymetry = FALSE) + 
+#  geom_sf(data = studyArea, fill=NA, color = "black") +
+#  geom_sf(data = A_tro_dist, fill = NA, color = '#795695') + 
+#  geom_sf(data = A_sax_dist, fill = NA, color = '#eb6262')
   
 
-gplot(sst) + 
-  geom_tile(aes(fill = value)) +
-  scale_fill_gradientn(colours = hcl.colors(n = 10, palette = "SunsetDark", rev = TRUE)) +
-  facet_wrap(~ variable) +
-  coord_equal()
-  
-#use ggplot to plot sst
-ggplot() + 
-  geom_spatraster(data = sst) +
-  scale_fill_gradient(low='blue', high='red', na.value = "yellow") 
 
-  
-basemap(limits = c(-135, 45, -50, 50), bathymetry = FALSE) +
-  geom_spatraster(data = sst_2) +
-  scale_fill_gradient(low='blue', high='red', na.value = "darkgreen") 
-
-
-
-#trying a new sst raster
-#https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.nodc:0077816
+#trying a new sst raster from https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.nodc:0077816
 sst_2 <- rast('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/2009-04_Pathv5.0_daynight_SST_monaprc.tif')
-plot(sst_2)
+#plot(sst_2)
 
-sst2_crop <- crop(sst_2, A_sax_dist)
-plot(sst2_crop)
+sst2_crop <- crop(sst_2, studyArea)
+#plot(sst2_crop)
 
-#use ggplot to plot sst
-ggplot() + 
+#use ggplot to create plot zoomed out to whole world (using non-cropped objects) and including a bbox for the study area to indicate the area of the zoomed in plot
+ggplot() +
   geom_spatraster(data = sst_2) +
-  scale_fill_gradient(low='darkblue', high='red') + 
-  
+  scale_fill_gradient2(low='lightblue', mid = 'orange', high='darkred', midpoint = 15) +
   geom_sf(data = A_sax_dist, fill = '#eb6262', color = '#eb6262') + 
-  geom_sf(data = A_tro_dist, fill = '#795695', color = '#795695') 
+  geom_sf(data = A_tro_dist, fill = '#795695', color = '#795695') +
+  geom_sf(data = occ_comb_sf, fill = "black", color = "black", size = 0.01) +
+  geom_sf(data = studyArea, fill = NA, color = "black") + 
+  guides(fill = guide_legend(title = "Sea Surface Temperature (C)")) 
 
+```
+
+
+
+
+## Zoomed in map
+
+This has an interpretable legend, but I spent an hour trying to incorporate a second legend for the two distributions and the point data, but with no luck. I've decided the point is not worth the hassle and I would love your feedback if you have a tip on how to add another legend that shows the colors of the other shape files I incorporated. 
+```{r}
+#use ggplot to create plot zoomed into study area
+ggplot() + 
+  geom_spatraster(data = sst2_crop) +
+  scale_fill_gradient2(low='lightblue', mid='orange', high='darkred', midpoint = 15) +
+  geom_sf(data = A_sax_dist, aes(color = SCI_NAME), fill = '#eb6262', color = '#eb6262') + 
+  geom_sf(data = A_tro_dist, fill = '#795695', color = '#795695') +
+  geom_sf(data = occ_comb_sf, fill = "black", color = "black", size = 0.01) +
+  guides(fill = guide_legend(title = "Sea Surface Temperature (C)")) 
 
 ```
 
