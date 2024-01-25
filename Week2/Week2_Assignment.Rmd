@@ -36,7 +36,6 @@ require(rasterVis)
 
 
 ## Read in all the data
-YOU WILL NEED TO CHANGE THE PATH ON LINES 52 AND 58, THOSE DATASETS DID NOT WORK TO PULL FROM GITHUB, BUT I LEFT THE ORIGINAL CODE BELOW COMMENTED OUT. 
 ```{R}
 
 # Read in species distribution data downloaded from IUCN redlist
