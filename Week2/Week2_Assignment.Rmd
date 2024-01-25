@@ -48,16 +48,18 @@ A_tro_dist = st_read('/vsicurl/https://raw.githubusercontent.com/C-Tracy/Spatial
 #occ = read.csv('~/Downloads/Abudefduf_sax_tro_vertnet-e7736bf57d094efdbc063509f61b2425.tsv', sep='\t')
 
 
-#CHANGE TO YOUR DIRECTORY IF NOT RUNNING FROM DOWNLOADS FOLDER
-occ_sax = read.csv('~/Downloads/observations-396470.csv')
-#Below is the command that should work pulling from github but isn't (the file isn't too large)
-#occ_sax = read.csv('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/observations-396470.csv')
+#The below line is if you have to run from your downloads if fetching from github isn't working
+#occ_sax = read.csv('~/Downloads/observations-396470.csv')
+
+#Below is the command that should work pulling from github
+occ_sax = read.csv('https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/observations-396470.csv')
 
 
-#CHANGE TO YOUR DIRECTORY IF NOT RUNNING FROM DOWNLOADS FOLDER
-occ_tro = read.csv('~/Downloads/observations-396472.csv')
-#Below is the command that should work pulling from github but isn't (the file isn't too large)
-#occ_tro = read.csv('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/observations-396472.csv')
+#The below line is if you have to run from your downloads if fetching from github isn't working
+#occ_tro = read.csv('~/Downloads/observations-396472.csv')
+
+#Below is the command that should work pulling from github
+occ_tro = read.csv('https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/observations-396472.csv')
 
 occ_comb = rbind(occ_sax, occ_tro)
 
