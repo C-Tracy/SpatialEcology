@@ -11,6 +11,15 @@ output: html_notebook
 Place your code in the code chunk below so I can reproduce your analyses/figures.
 
 ```{r}
+#requiring necessary packages
+require(tidyverse)
+require(sf)
+require(AICcmodavg)
+require(tigris)
+require(FedData)
+require(terra)
+require(tidyterra)
+
 #build raster (100x100)
 simpRast = rast(ncol=100, nrow=100, xmin=1, xmax=100, ymin=1, ymax=100)
 
@@ -32,9 +41,9 @@ simpRastI10 <- aggregate(simpRast, fact=10, fun='mean')#mean value
 
 
 #calculate mean and variance of values in resulting rasters from previous step
-means <- c(mean(as.matrix(simpRastI2)), mean(as.matrix(simpRastI5)), mean(as.matrix(simpRastI10)))
-variances <- c(var(as.matrix(simpRastI2)), var(as.matrix(simpRastI5)), var(as.matrix(simpRastI10)))
-grain <- c(2, 5, 10)
+means <- c(mean(as.matrix(simpRast)), mean(as.matrix(simpRastI2)), mean(as.matrix(simpRastI5)), mean(as.matrix(simpRastI10)))
+variances <- c(var(as.matrix(simpRast)), var(as.matrix(simpRastI2)), var(as.matrix(simpRastI5)), var(as.matrix(simpRastI10)))
+grain <- c(1, 2, 5, 10)
 df <- data.frame(grain, means, variances)
   
 #scatterplots (x-axis = grain size), y-axis = mean (plot 1) & variance (plot 2)
@@ -75,9 +84,9 @@ simpRastI10 <- aggregate(simpRast, fact=10, fun='modal')#mean value
 
 
 #calculate mean and variance of values in resulting rasters from previous step
-means <- c(mean(as.matrix(simpRastI2)), mean(as.matrix(simpRastI5)), mean(as.matrix(simpRastI10)))
-variances <- c(var(as.matrix(simpRastI2)), var(as.matrix(simpRastI5)), var(as.matrix(simpRastI10)))
-grain <- c(2, 5, 10)
+means <- c(mean(as.matrix(simpRast)), mean(as.matrix(simpRastI2)), mean(as.matrix(simpRastI5)), mean(as.matrix(simpRastI10)))
+variances <- c(var(as.matrix(simpRast)), var(as.matrix(simpRastI2)), var(as.matrix(simpRastI5)), var(as.matrix(simpRastI10)))
+grain <- c(1, 2, 5, 10)
 df <- data.frame(grain, means, variances)
   
 #scatterplots (x-axis = grain size), y-axis = mean (plot 1) & variance (plot 2)
@@ -208,8 +217,9 @@ model5km = glm(pres~for5km, family='binomial', data=forestData)
 aictab(list(modelNull, model100m, model500m, model1km, model2km, model3km, model4km, model5km), modnames=c('Null', '100 m', '500 m', '1 km', '2 km', '3 km', '4 km', '5 km'))
 
 ```
+**Which scale do you think represents the critical or characteristic scale at which forest cover affects skink presence? Is this scale clearly better than the others, or is there some ambiguity? What are some mechanisms by which forest cover could affect skink presence at this scale? What is your overall conclusion regarding how forest cover affects skink presence (i.e., take a look at the betas)?**
 
-Based on AICc values, the 2km scale is the best model (lowest AIC) to explain the data given the models used. The Delta AIC indicates that the models for 2-5km are all decent models (all have a delta AIC lower than 2), but overall the 2 km scale model is the best supported model of the models used. 
+Based on AICc values, the 2km scale is the best model (lowest AIC) to explain the data given the models used. The Delta AIC indicates that the models for 2-5km are all decent models, so there may be a bit of ambiguity (all have a delta AIC lower than 2), but overall the 2 km scale model is the best supported model of the models used. Forest cover could affect skink presence at a 2km scale as this could potentially be their average "home range size" - but I have no idea if that is true. Another possible explanation for 2km being the characteristic scale is that forest cover at this scale may impact/drive invertebrate abundance, which is the primary food source of five-lined skinks. Overall, while this 2km scale is the best model, I think all of the 3-5 km scales are largely correlated with one another and all are also supported as explaining the data of skink presence/absence, and could be interpreted together as all impacting skink presence. 
 
 ## Challenge 6 (2 points)
 
