@@ -140,13 +140,30 @@ ggplot() +
 This has an interpretable legend, but I spent an hour trying to incorporate a second legend for the two distributions and the point data, but with no luck. I've decided the point is not worth the hassle and I would love your feedback if you have a tip on how to add another legend that shows the colors of the other shape files I incorporated. 
 ```{r}
 #use ggplot to create plot zoomed into study area
+# ggplot() + 
+#   geom_spatraster(data = sst2_crop) +
+#   scale_fill_gradient2(low='lightblue', mid='orange', high='darkred', midpoint = 15) +
+#   geom_sf(data = A_sax_dist, aes(color = SCI_NAME), fill = '#eb6262', color = '#eb6262') + 
+#   geom_sf(data = A_tro_dist, fill = '#795695', color = '#795695') +
+#   geom_sf(data = occ_comb_sf, fill = "black", color = "black", size = 0.01) +
+#   guides(fill = guide_legend(title = "Sea Surface Temperature (C)")) 
+
+
+# You could try something like this.
 ggplot() + 
   geom_spatraster(data = sst2_crop) +
   scale_fill_gradient2(low='lightblue', mid='orange', high='darkred', midpoint = 15) +
-  geom_sf(data = A_sax_dist, aes(color = SCI_NAME), fill = '#eb6262', color = '#eb6262') + 
-  geom_sf(data = A_tro_dist, fill = '#795695', color = '#795695') +
-  geom_sf(data = occ_comb_sf, fill = "black", color = "black", size = 0.01) +
-  guides(fill = guide_legend(title = "Sea Surface Temperature (C)")) 
+  new_scale_fill() +
+  geom_sf(data = A_sax_dist, aes(color = SCI_NAME, fill = SCI_NAME)) +
+  scale_fill_manual(values='#eb6262') + scale_color_manual(values='#eb6262') +
+  new_scale_fill() + new_scale_color() +
+  geom_sf(data = A_tro_dist, aes(color = SCI_NAME, fill = SCI_NAME)) +
+  scale_fill_manual(values = '#795695') + scale_color_manual(values = '#795695') +
+  new_scale_fill() + new_scale_color() +
+  geom_sf(data = occ_comb_sf, aes(pch = scientific_name), color='black', fill = "black", size = 0.01)
 
 ```
 
+# Grade
+
+$\color{red}{\text{Awesome work, Claire. You lost half a point for the missing legend objects, but overall great job.}}$
