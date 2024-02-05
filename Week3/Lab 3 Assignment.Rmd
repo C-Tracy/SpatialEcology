@@ -54,6 +54,8 @@ plot(grain, variances)
 
 As the grain size increases, there is no change in the mean values, however there is a decrease in the variance. The static mean value makes sense as the function used to increase the grain size is the mean, and so as you increase the grain size using the means, it shouldn't change the mean of the dataset as a whole. The variance decrease with increasing grain size because taking the mean of a subset of the data is going to naturally decrease the variance, and as that subset of data gets larger and reflects a larger portion of the whole dataset (i.e. a grain that includes 10 units rather than 1 or 2), the values are going to get closer to the true mean and thus decrease the variance seen between each "subset". 
 
+$\color{red}{\text{Awesome. +4}}$
+
 ## Challenge 2 (4 points)
 
 **Identify a situation in which you might use a summary function other than the mean to calculate new cell values when you scale up the grain of a raster (e.g., median, mode, minimum, maximum, etc.). Repeat the effort from Challenge 1 using this alternate function. Again, create two scatterplots showing how the mean and variance values of the raster change as you scale up the cell size by factors of 2, 5, and 10. Do you see a similar pattern? Compare and contrast your findings with those from Challenge 1.**
@@ -71,7 +73,7 @@ set.seed(2)
 simpRast[] = rnorm(ncell(simpRast), mean=25, sd=3)
 
 plot(simpRast)
-text(simpRast)
+# text(simpRast)
 
 #calculate mean and variance of values in raster
 global(simpRast, mean) # Mean is 25.0331	
@@ -97,11 +99,15 @@ plot(grain, variances)
 
 Here we see a different trend in means, but the same trend with variance. As we take the "mode" for each subset, this isn't an accurate representation of the true mean of the subset, and so by taking the mode for each subset we move further away from the true mean of the dataset represented in our new, larger clusters. The variance the same trend as in question 1, because as we try to combine data into any type of summary statistics, we are naturally taking out variation seen and thus the variance of the overall dataset after summarizing it into different cluster sizes naturally decreases, and the fewer datapoints we have in the end, the less variance we are going to see. 
 
+$\color{red}{\text{Ok, but why is the mean value decreasing? And when might you use the mode instead of the mean to summarize a raster? +3.5}}$
+
 ## Challenge 3 (2 points)
 
 **Recall that before we calculated forest cover, we cropped our NLCD raster to minimize its size and the computing effort necessary from our poor little computers. How might that affect our ability to evaluate the scale at which five-lined skinks respond to forest cover? Why?**
 
 In the example we cropped the NLCD raster to our study area variable after adding 10km in all directions from the extent of points sampled. This necessitates that at the points near the edges of this study area, if we try to look at a scale larger than 10 km they will all innately be 0 because we didn't include them in our nlcd raster of forest cover. 
+
+$\color{red}{\text{Perfect. +2}}$
 
 ## Challenge 4 (4 points)
 
@@ -198,6 +204,8 @@ forestData %>%
 ```
 As the scales get larger they become more correlated to the one lower, i.e. 4km x 5km is the highest correlation, whereas comparing 1km x 2km is still correlated, but not near as strong as 4x5. 
 
+$\color{red}{\text{Specifically, they are positively correlated with one another. In addition, you'll notice that measurements further apart are less correlated with one another. +3}}$
+
 ## Challenge 5 (4 points)
 
 **Fit 8 logistic regression models (a null model and one for each of the 7 forest scales). Compare these models using AICc. Which scale do you think represents the critical or characteristic scale at which forest cover affects skink presence? Is this scale clearly better than the others, or is there some ambiguity? What are some mechanisms by which forest cover could affect skink presence at this scale? What is your overall conclusion regarding how forest cover affects skink presence (i.e., take a look at the betas)?**
@@ -221,6 +229,8 @@ aictab(list(modelNull, model100m, model500m, model1km, model2km, model3km, model
 
 Based on AICc values, the 2km scale is the best model (lowest AIC) to explain the data given the models used. The Delta AIC indicates that the models for 2-5km are all decent models, so there may be a bit of ambiguity (all have a delta AIC lower than 2), but overall the 2 km scale model is the best supported model of the models used. Forest cover could affect skink presence at a 2km scale as this could potentially be their average "home range size" - but I have no idea if that is true. Another possible explanation for 2km being the characteristic scale is that forest cover at this scale may impact/drive invertebrate abundance, which is the primary food source of five-lined skinks. Overall, while this 2km scale is the best model, I think all of the 3-5 km scales are largely correlated with one another and all are also supported as explaining the data of skink presence/absence, and could be interpreted together as all impacting skink presence. 
 
+$\color{red}{\text{Specifically, skink presence increases with increasing forest cover across scales. +3.5}}$
+
 ## Challenge 6 (2 points)
 
 **If you encounter ambiguity in identifying the characteristic scale of an effect, can you come up with a clever way to condense the information in the multi-scale variables into just one or two? When might it be ok to include two covariates in the same model (think multiple regression) that represent the same ecological feature measured at different scales (e.g., forest cover at 1 km AND forest cover at 5 km in the same model)? I can think of both a biological and a statistical answer to this question.**
@@ -228,3 +238,4 @@ Based on AICc values, the 2km scale is the best model (lowest AIC) to explain th
 
 From a statistical sense, I suppose if there is NOT a correlation between the two spatial scales being used, then statistically there wouldn't be an issue with including both. Biologically, I suppose that if these two spatial scales represent different life-history aspects, i.e. if the 1km scale encompassed their normal range, and the 5km scale encompassed a regular migration of the species to breeding sites or something similar, then it would make sense to include both separately in your model (again assuming that the two variables are not correlated, because even if there is biological reasoning for this, I think that would statistically not be kosher). 
 
+$\color{red}{\text{I think you're saying that your clever way to condense information into two scales would be to assess the biological scales at which the species is likely to respond to forest cover, ensure they are not correlated, then choose those two scales for your model. +2}}$
