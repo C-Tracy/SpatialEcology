@@ -72,7 +72,7 @@ tmp = rbind(patchArea, patchCai, patchCircle, patchContig, patchCore, patchEnn, 
 
 tmp2 = tmp[, 3:ncol(tmp)]
 
-PerformanceAnalytics::chart.Correlation(tmp2, histogram=F)
+PerformanceAnalytics::chart.Correlation(tmp2 %>% select(-id, -class), histogram=F)
 
 ```
 
@@ -80,6 +80,8 @@ PerformanceAnalytics::chart.Correlation(tmp2, histogram=F)
 
 
 When looking at the sigificance indicators (red starts), it appears that no measure is entirely unique in nature, and these patch level matrices are often correlated with one-another and are thus redundant in nature. When looking at the charts and not the significance there are some that appear less strongly correlated to the others and thus a bit more unique (such as circle - which is a shape metric or enn - nearest neighbor distance). 
+
+$\color{red}{\text{Nice. +4}}$
 
 ## Challenge 2 (4 points)
 
@@ -118,7 +120,7 @@ Number of patches (np) increases as you switch from queen rule (8) to rook rule 
 
 It might be appropriate to use queen rule when you are dealing with a species with a higher dispersal distance, and a greater ability to move between patches (and thus it becomes logical to have fewer patches that are larger in size), whereas with a species that has low dispersal and movement capability it would make sense to use the rook rule because it is less likely to be able to move between the two habitats, and it's functional habitat units are likely smaller (and would be better represented by rook rule). 
 
-
+$\color{red}{\text{Awesome! +4}}$
 
 ## Challenge 3 (4 points)
 
@@ -269,7 +271,7 @@ lsm_l_shei(nlcdSimple2019)
 ```
 This is shown with shannon's diversity index with an increase in shannons diversity from 2001 to 2019. This can be interpreted such that decreasing 1 landcover type (forest), and simultaneously increasing 3 landcover types in that area (open, grassland, and ag) you are thus creating a more "diverse" landscape (higher proportion of a higher number of landcover types). Shannons evenness also increases, and because this is a measure of the ratio between the actual shannons diversity and the theoretical maximum, it increases because there becomes a more equal proportion of different landcover types by decreasing the forest and increasing three other landcover types. These both show that there is a more equal proportion of each landcover type given the changes from 2001 - 2019 removing forest and increasing open, grassland, and ag areas. 
 
-
+$\color{red}{\text{Superb., +4}}$
 
 ## Challenge 4 (4 points)
 
@@ -377,7 +379,8 @@ c_ca_voss70 = add_column(c_ca_voss70, voss = 70)
 c_ca_voss80 = add_column(c_ca_voss80, voss = 80)
 c_ca_voss90 = add_column(c_ca_voss90, voss = 90)
 
-c_ca_comb = rbind(c_ca_voss10, c_ca_voss20, c_ca_voss30, c_ca_voss40, c_ca_voss50, c_ca_voss60, c_ca_voss70, c_ca_voss80, c_ca_voss90)
+c_ca_comb = rbind(c_ca_voss10, c_ca_voss20, c_ca_voss30, c_ca_voss40, c_ca_voss50, c_ca_voss60, c_ca_voss70, c_ca_voss80, c_ca_voss90) %>% 
+  filter(class==1)
 plot(x=c_ca_comb$voss, y=c_ca_comb$value, xlab = "Threshold Value", ylab= "Total Class Area")
 
 
@@ -439,6 +442,8 @@ I chose total class area to show the major change which is an increase with fore
 I next chose an aggregation metric, as another major trend I noticed was that the patches were remaining the same, and thuse the structure of the patches should be the same across all of these threshold values. Interestingly, the mesh decreased to the halfway point of 50% threshold, and then began to increase. This value is a measure of patch area relative to total landscape, so this trend makes sense as the first few incremental changes in threshold up until 50 were increasing without creating clean patches, whereas as you increase from 50%, those patches are clearly made and it increases the patch size without creating more patches. 
 
 My final choice was edge density to show how shape changed over time. I initially thought that this would constantly decrease, however after seeing the results and looking more closely at the plots, it makes sense that there was an increase then a decrease. This is likely because  the first few incremental changes in threshold were creating more smaller patches (and thus more edges), but as you went above a 50% threshold the existing patches were well formed and well filled in, and thus increasing the density of forest actually decreased the edge density. 
+
+$\color{red}{\text{Amazing! +4}}$
 
 ## Challenge 5 (4 points)
 
@@ -633,3 +638,5 @@ Given the visual decrease in "splotchiness" for lack of a better term (or patchi
 I also wanted to look at mean patch size, because with an increasing clustering I expected a larger mean patch size with a fewer number of patches (and visually this appeared to be the case). After plotting these values, it does support this, but again only at the higher h-values (0.7-0.9 all were higher), whereas 0.2-0.6 show very gradual increases in this mean patch value. This again makes sense because while it is increasing the clustering, there are still a lot of smaller patches given the randomness of how the spaces were filled in. 
 
 The final metric I wanted to look at to demonstrate these differences was an aggregation metric, this time using the aggregation index. Given that the change in h-values is supposed to change the clustering, I would expect this to directly drive aggregation of points, specifically a higher h-value means higher aggregation of points. This was very cleanly seen in the plots and supported my thought that as the h-value is increasing, you are seeing an increase in aggregation of the points (even if they were not in cleanly defined patches). 
+
+$\color{red}{\text{Excellent work on this, Claire. You clearly thought hard about this, and I hope you learned something in the process! +4}}$
