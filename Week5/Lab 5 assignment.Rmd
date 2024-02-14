@@ -110,22 +110,21 @@ So overall it is looking already like critter 1 is non-randomly distributed, and
 ```{r}
 
 #Critter 1 Ripley's L
-lNone = Lest(pppcritter1, correction='translate')
-#plot(lNone)
-plot(lNone, .-r~r)
+Ltrans = Lest(pppcritter1, correction='translate')
+plot(Ltrans, .-r~r, main="Critter 1 Ripley's L")
 
 # Critter 2 Ripley's L
-lNone = Lest(pppcritter2, correction='translate')
-plot(lNone, .-r~r)
+Ltrans = Lest(pppcritter2, correction='translate')
+plot(Ltrans, .-r~r, main="Critter 2 Ripley's L")
 
-set.seed(23)
+set.seed(55)
 
 #Now testing for statistical difference under CSR
 lCsr = envelope(pppcritter1, Lest, nsim=99, rank=1, correction='translate', global=F)
-plot(lCsr, .-r~r, shade=c('hi', 'lo'), legend=F)
+plot(lCsr, .-r~r, shade=c('hi', 'lo'), legend=F, main="Critter 1 CSR Ripley's L")
 
 lCsr = envelope(pppcritter2, Lest, nsim=99, rank=1, correction='translate', global=F)
-plot(lCsr, .-r~r, shade=c('hi', 'lo'), legend=F)
+plot(lCsr, .-r~r, shade=c('hi', 'lo'), legend=F, main="Critter 2 CSR Ripley's L")
 ```
 From these true values of Ripleys L there is some deviation from expected seen with the dashed red line, however looking at the y-axis these deviation values are quite low. When plotting our observed pattern against simulated complete spatial randomness in the landscape (lCsr) we see that Critter 1 slightly falls outside of the confidence interval at lower range scales, however Critter 2 is largely within the confidence interval. This is indicating that for critter 1, when examining circular areas with smaller radii (at smaller scales) there are slightly more individuals of critter 1 than expected under random, but that trend goes away as you increase the radius of the circles measured. 
 
@@ -142,14 +141,14 @@ marks(pppcritters) <- factor(pppcritters$marks)
 
 # Critter 1 to critter 1 (i.e. is critter 1 randomly distributed amongst itself)
 lMulti = envelope(pppcritters, Lcross, nsim=99, rank=1, global=F, i="critter1", j="critter1", simulate = expression(rlabel(pppcritters)))
-plot(lMulti, .-r~r, legend=F)
+plot(lMulti, .-r~r, legend=F, main="Critter 1 - Critter 1 Lcross")
 # Critter 2 to critter 2 (i.e. is critter 2 randomly distributed amongst itself)
 lMulti = envelope(pppcritters, Lcross, nsim=99, rank=1, global=F, i="critter2", j="critter2", simulate = expression(rlabel(pppcritters)))
-plot(lMulti, .-r~r, legend=F)
+plot(lMulti, .-r~r, legend=F, main="Critter 2 - Critter 2 Lcross")
 
 # Critter 1 to critter 2 (i.e. is critter 1 randomly distributed relative to critter 2)
 lMulti = envelope(pppcritters, Lcross, nsim=99, rank=1, global=F, i="critter1", j="critter2", simulate = expression(rlabel(pppcritters)))
-plot(lMulti, .-r~r, legend=F)
+plot(lMulti, .-r~r, legend=F, main="Critter 1 - Critter 2 Lcross")
 
 ```
 
