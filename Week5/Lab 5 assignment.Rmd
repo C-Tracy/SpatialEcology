@@ -29,6 +29,8 @@ simPp
 
 There are 103 organisms on my landscape. The expected number is about 100 organisms because the intensity (or lambda) of points is set to 0.01, so for every square m you expect 0.01 organisms, and you can multiply that by the total area (here 100x100, so 10,000) to get the expected number of individuals (here 10,000 x 0.01 = 100).
 
+$\color{red}{\text{Perfect. +3}}$
+
 
 # Challenge 2 (3 points)
 
@@ -47,6 +49,9 @@ data.frame(model = c('int', 'xy', 'xy2'),
 ```
 
 Here I fitted the data to homogeneous (int), linear (xy), and quadratic(xy2). The best fitting model was the homogeneous, which indicates that there is no linear or quadratic pattern in the simulated data, rather it supports that the data is homogeneous.  
+
+$\color{red}{\text{Nice. +3}}$
+
 
 
 # Challenge 3 (14 points)
@@ -153,3 +158,6 @@ plot(lMulti, .-r~r, legend=F, main="Critter 1 - Critter 2 Lcross")
 ```
 
 The results of these three plots indicates that 1. there are more critter 1s relative to critter 1 than would be expected under random, which means they are clumping together, 2. there are an expected number of critter 2s relative to critter 2 under random, which means critter 2 is  randomly distributed, and 3. when looking at critter 1 relative to critter 2, we see a significant dip below expected under random, indicating that critter 1 is further away from critter 2 than expected by random chance. This Lcross test provides the final support I need to conclude that critter 1 is indeed the prey that is actively avoiding a predator which is resulting in the critter 1 being slightly clustered together on the landscape, and critter 2 is a randomly distributed predator that those prey are avoiding. 
+
+$\color{red}{\text{Awesome work, Claire! +14}}$
+
