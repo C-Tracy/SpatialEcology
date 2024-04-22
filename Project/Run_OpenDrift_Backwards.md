@@ -1,6 +1,13 @@
 
 Run 1
 ```
+python3
+
+from opendrift.readers import reader_netCDF_CF_generic
+from opendrift.models.pelagicegg import PelagicEggDrift
+from datetime import datetime, timedelta, date
+o = PelagicEggDrift(loglevel=20)
+
 import datetime
 time=datetime.datetime(2023, 7, 15)
 
@@ -36,6 +43,13 @@ o.run(duration=timedelta(hours=-336), time_step=-3600, outfile='pelagiceggdrift_
 
 Run2
 ```
+python3
+
+from opendrift.readers import reader_netCDF_CF_generic
+from opendrift.models.pelagicegg import PelagicEggDrift
+from datetime import datetime, timedelta, date
+o = PelagicEggDrift(loglevel=20)
+
 import datetime
 time=datetime.datetime(2023, 7, 29)
 o.seed_elements(-77.15568, 17.6825, z=-1, radius=2000, number=500,
@@ -72,6 +86,13 @@ o.run(duration=timedelta(hours=-336), time_step=-3600, outfile='pelagiceggdrift_
 
 Run 3
 ```
+python3
+
+from opendrift.readers import reader_netCDF_CF_generic
+from opendrift.models.pelagicegg import PelagicEggDrift
+from datetime import datetime, timedelta, date
+o = PelagicEggDrift(loglevel=20)
+
 import datetime
 time=datetime.datetime(2023, 8, 15)
 
@@ -107,6 +128,13 @@ o.run(duration=timedelta(hours=-336), time_step=-3600, outfile='pelagiceggdrift_
 
 Run 4
 ```
+python3
+
+from opendrift.readers import reader_netCDF_CF_generic
+from opendrift.models.pelagicegg import PelagicEggDrift
+from datetime import datetime, timedelta, date
+o = PelagicEggDrift(loglevel=20)
+
 import datetime
 time=datetime.datetime(2023, 8, 29)
 
