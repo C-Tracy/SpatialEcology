@@ -20,7 +20,7 @@ o.add_readers_from_list(['/vol/vvfelles/opendrift/forcing_data/norkyst/norkyst_a
 ```
 
 
-```
+```python3
 import datetime
 time=datetime.datetime(2023, 7, 1)
 o.seed_elements(-77.15568, 17.6825, z=-1, radius=2000, number=500,
