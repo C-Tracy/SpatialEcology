@@ -56,6 +56,9 @@ o.seed_elements(-83.09258, 14.98559, z=-1, radius=2000, number=500,
 o.seed_elements(-79.880314, 15.83924, z=-1, radius=2000, number=500,
                 time=time, diameter=0.0014, neutral_buoyancy_salinity=31.25)
 
+o.run(duration=timedelta(hours=50), time_step=3600)
+
+
 o.run(duration=timedelta(hours=336), time_step=3600, outfile='pelagiceggdrift_run4.nc')
 ```
 
