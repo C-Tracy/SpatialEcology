@@ -1,6 +1,6 @@
 Scripts for running OpenDrift in python
 
-```{python3}
+```python3
 python3
 
 from opendrift.readers import reader_netCDF_CF_generic
