@@ -97,6 +97,12 @@ o.seed_elements(-82.23086, 9.45264, z=-1, radius=2000, number=500,
                 time=time, diameter=0.0014, neutral_buoyancy_salinity=31.25)
 o.seed_elements(-79.70708, 9.55347, z=-1, radius=2000, number=500,
                 time=time, diameter=0.0014, neutral_buoyancy_salinity=31.25)
+
+o.run(duration=timedelta(hours=-336), time_step=-3600, outfile='pelagiceggdrift_back14d_Jul152023.nc')
+o.run(duration=timedelta(hours=-336), time_step=-3600, outfile='pelagiceggdrift_back14d_Jul292023.nc')
+o.run(duration=timedelta(hours=-336), time_step=-3600, outfile='pelagiceggdrift_back14d_Aug152023.nc')
+o.run(duration=timedelta(hours=-336), time_step=-3600, outfile='pelagiceggdrift_back14d_Aug292023.nc')
+
 ```
 
 
@@ -107,10 +113,6 @@ o.run(duration=timedelta(hours=50), time_step=3600)
 o.run(duration=timedelta(hours=336), time_step=3600, outfile='pelagiceggdrift_14d_Jul12023.nc')
 ```
 
-Run command for backwards in time simulation
-```
-o.run(duration=timedelta(hours=-336), time_step=-3600, outfile='pelagiceggdrift_back14d_Jul152023.nc')
-```
 
 Viewing results
 ```python3
