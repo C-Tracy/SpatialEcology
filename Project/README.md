@@ -1,7 +1,7 @@
 # Modelling larval movement to estimate population connectivity of marine fish.
 
 ## Resources
-OceanDrift
+OceanDrift: Install instructions here (https://opendrift.github.io/install.html)
 podaac data subscriber
 
 ## Installing Packages
