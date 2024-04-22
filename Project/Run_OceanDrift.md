@@ -33,7 +33,7 @@ o.add_readers_from_list(['/vol/vvfelles/opendrift/forcing_data/norkyst/norkyst_a
 import datetime
 time=datetime.datetime(2023, 7, 1)
 import cftime
-time=cftime.DatetimeJulian(2020, 7, 1, 0, 0, 0, 0)
+time=cftime.DatetimeJulian(2020, 7, 1, 0)
 
 o.seed_elements(-77.15568, 17.6825, z=-1, radius=2000, number=500,
                 time=time, diameter=0.0014, neutral_buoyancy_salinity=31.25)
