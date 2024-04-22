@@ -11,7 +11,7 @@ o = PelagicEggDrift(loglevel=20)
 
 Add readers from data downloaded from OSCAR
 ```python3
-o.add_readers_from_list(['https://tds.hycom.org/thredds/dodsC/GLBy0.08/latest', 'https://pae-paha.pacioos.hawaii.edu/thredds/dodsC/ncep_global/NCEP_Global_Atmospheric_Model_#best.ncd', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data/oscar_vel11222.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data/oscar_vel11227.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data/oscar_vel11232.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data/oscar_vel11237.nc'])
+o.add_readers_from_list(['https://tds.hycom.org/thredds/dodsC/GLBy0.08/latest', 'https://pae-paha.pacioos.hawaii.edu/thredds/dodsC/ncep_global/NCEP_Global_Atmospheric_Model_best.ncd', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data/oscar_vel11222.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data/oscar_vel11227.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data/oscar_vel11232.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data/oscar_vel11237.nc'])
 ```
 
 The following readers are those used by the OpenDrift GUI. Most were out of range for the study area, or out of the desired timeframe
