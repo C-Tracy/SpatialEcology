@@ -24,3 +24,9 @@ podaac-data-downloader -c OSCAR_L4_OC_FINAL_V2.0 -d ./data --start-date 1993-01-
 
 ```
 
+Combining .nc files
+```python3
+import xarray
+ds = xarray.open_mfdataset('*.nc')
+ds.to_netcdf('combined.nc')
+```
