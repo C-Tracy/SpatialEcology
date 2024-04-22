@@ -24,6 +24,16 @@ podaac-data-downloader -c OSCAR_L4_OC_FINAL_V2.0 -d ./data --start-date 1993-01-
 
 ```
 
+## Potential method to reformat data that isn't actually working for me at the moment
+```
+python3
+ds = Dataset("combined.nc")
+time_var = ds.variables['time']
+dtime = num2date(time_var[:],time_var.units)
+```
+Current problems with above script are ds is read-only, and when I try to create a new file that has write permissions and then redefine it as ds from the read only, I have no way to save it after creating the file.
+
+
 Combining .nc files
 ```python3
 import xarray
