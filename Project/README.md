@@ -24,6 +24,11 @@ podaac-data-downloader -c OSCAR_L4_OC_FINAL_V2.0 -d ./data --start-date 1993-01-
 
 ```
 
+Tring one final dataset from Oscar: Near real-time (available from 1/1/2021 to present)
+```
+podaac-data-downloader -c OSCAR_L4_OC_NRT_V2.0 -d ./data --start-date 2021-07-01T00:00:00Z --end-date 2021-07-31T00:00:00Z -b="-98.733454,5.930441,-59.366430,30.404161" -e ""
+```
+
 ## Potential method to reformat data that isn't actually working for me at the moment
 ```
 python3
