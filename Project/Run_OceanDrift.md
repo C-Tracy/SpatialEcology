@@ -18,6 +18,9 @@ Add readers from data downloaded from OSCAR final dataset for 07 2020
 Not using other datasets (not in Juliandate, but I think these nc files are
 ```python3
 o.add_readers_from_list(['/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930101.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930102.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930103.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930104.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930105.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930106.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930107.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930108.nc'])
+
+o.add_readers_from_list(['/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/combined.nc'])
+
 ```
 
 The following readers are those used by the OpenDrift GUI. Most were out of range for the study area, or out of the desired timeframe
