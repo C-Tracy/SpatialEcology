@@ -65,7 +65,7 @@ o.seed_elements(-79.880314, 15.83924, z=-1, radius=2000, number=500,
 o.run(duration=timedelta(hours=50), time_step=3600)
 
 
-o.run(duration=timedelta(hours=336), time_step=3600, outfile='pelagiceggdrift_run4.nc')
+o.run(duration=timedelta(hours=336), time_step=3600, outfile='pelagiceggdrift_14d_Jul12023.nc')
 ```
 
 Viewing results
