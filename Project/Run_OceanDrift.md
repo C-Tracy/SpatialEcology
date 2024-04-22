@@ -17,7 +17,15 @@ o.add_readers_from_list(['https://tds.hycom.org/thredds/dodsC/GLBy0.08/latest', 
 Add readers from data downloaded from OSCAR final dataset for 07 2020
 Not using other datasets (not in Juliandate, but I think these nc files are
 ```python3
-o.add_readers_from_list(['/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930101.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930102.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930103.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930104.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930105.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930106.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930107.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_19930108.nc'])
+o.add_readers_from_list(['/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200701.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200702.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200703.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200704.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200705.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200706.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200707.nc',
+'/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200708.nc',
+'/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200709.nc',
+'/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200710.nc',
+'/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200711.nc',
+'/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200712.nc',
+'/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200713.nc',
+'/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200714.nc',
+'/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200715.nc'])
 
 o.add_readers_from_list(['/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/combined.nc'])
 
