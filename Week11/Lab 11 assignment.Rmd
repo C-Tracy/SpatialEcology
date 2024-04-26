@@ -132,6 +132,8 @@ Neither measure includes an individual effect, and both take into account the la
 
 The differences may be from 1) using different background points for the logistic regression vs the manleys statistic, which may drive differences and indicate that the use of random background points can influence the output statistic for Manleys and logistic regressions, however I think the larger factor is 2) that Manley's statistic has an effect of the unit sum constraint and strong positive or negative selection for certain habitat types are driving the appearance of positive or negative selection for other habitat types. 
 
+$\color{red}{\text{The problem here is that you haven't lined up the estimates correctly. You should be getting nearly identical parameter estimates for each method. The exponentiated beta coefficients represent the odds ratios for the various cover types (i.e., the odds a point in that category is used divided by the odds is is not used). This is the same way that wi is calculated. The only difference here is that we're now including a random effect to account for non-independence among points selected by the same panther. +3}}$
+
 # Challenge 2 (5 points)
 
 In the lab, we used the distribution of step lengths and turning angles to help us devise potential steps each individual could have taken at each point in time. Instead of step lengths, build a histogram representing the distribution of step speeds in km/hr. When and why might you choose to sample from a distribution of step speeds to calculate potential step lengths rather than drawing from the distribution of step lengths itself?
@@ -165,6 +167,8 @@ hist((pantherLtraj[[2]][,6])/((pantherLtraj[[2]][,7])/3600), main='Second CatID'
 Q: When and why might you choose to sample from a distribution of step speeds to calculate potential step lengths rather than drawing from the distribution of step lengths itself?
 
 You might want to sample from step speeds rather than step length if you are interested in the speed at which organisms can move through their environment, and through different habitats (which may indicate ease of movement through that habitat). 
+
+$\color{red}{\text{Km/hour! Also, I wanted to year you comment on the fact that step speed distributions will be better for generating potential steps in situations where fixes are not constant in time. +3.5}}$
 
 # Challenge 3 (5 points)
 
@@ -205,6 +209,8 @@ Q: Which panther took the most tortuous path? Which took the least tortuous path
 
 The panther that took the most tortuous path (closest to 0) was panther 1, while the panther that took the least tortuous path (closes to 1) was panther 6. 
 
+$\color{red}{\text{Nice. +5}}$
+
 # Challenge 4 (5 points)
 
 For each panther, calculate the frequency with which locations were recorded as points per day. Plot path straightness as a function of frequency (there should be 6 points on this figure, one per panther). What relationship do you notice between these two variables, and why might that pattern be occurring?
@@ -234,3 +240,5 @@ Q: What relationship do you notice between these two variables, and why might th
 I really don't see a relationship between these variables, which is what I would expect. All of these were sampled at a similar frequency, around .3-.4 samples / day, i.e. sampled every 3 or 4 days. Given this, I would expect that straightness is more a function of the landscape that individual is in or an individual effect. 
 
 I would expect that if we had a wider variety in sampling frequency, i.e. some measured multiple times per day, then we might actually see a decrease in straightness with increased frequency, as over the large picture they will move more straight, but I anticipate they wander more within a day and thus multiple samples/day would help to show that decreased straightness. Additionally, if we sampled even less frequently, I anticipate we would see an increased straightness because you are getting rid of the "wandering" that happens within a day and showing more of the big picture trend which will be more straight overall. 
+
+$\color{red}{\text{Good enough. The outcome of this analysis turned out to be wonky for some reason. +5}}$
