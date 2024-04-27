@@ -150,6 +150,9 @@ Circuit (commute distance) is the longest and the geoDist tends to be the shorte
 
 I would expect strong differences between Euclidean distance and metric of effective distance when the landscape has areas of high resistance, whereas when there is little to no resistance on the landscape, I anticipate that the effective distances will begin to approach the Euclidean shortest distance, as the resistance matrix would be effectively zero and not increase the distance values. The instances where there would still be a difference are likely in the circuit and random walk methods as they both include random walk components that will naturally deviate from the shortest euclidean path. 
 
+$\color{red}{\text{Awesome. +5}}$
+
+
 
 # Challenge 2 (5 points)
 
@@ -234,6 +237,9 @@ The three most common landcover types are 17-cypress swamp at a proportion of .2
 
 This makes sense that the more common landcover within the 10% least-cost corridor have low resistance values, as the corridor is calculated based off of a least-cost path which is determined based off of the provided resistance values. It is interesting that the most common landcover type has a higher resistance value than the second most common, however that is likely just by chance of what exists on the landscape. 
 
+$\color{red}{\text{Excellent. +5}}$
+
+
 
 # Challenge 3 (5 points)
 
@@ -258,6 +264,9 @@ plot(passageMapT0.001)
 ```
 
 As theta increases, the random walk becomes less random and more of the random walks follow the same path (which resembles the least-costs path). The more sporadic paths are likely more realistic for an organism, as it isn't necessarily going to follow the least-cost path, and there is some randomness in every individual, along with different complex choices that lead to a path, that would cause them to stray from the least-cost path. However, the more random path (lowest theta) is also more spread out and covers essentially the entire map between the two points, which is not realistic for conservation planning. Conservation planning is going to be much easier with a narrower area (the highest theta) which resembles the least-costs path and is the least realistic for planning actual movements of individual organisms. Going with an in between value may be the best bet to make it easier for conservation planning, yet more realistic in terms of the randomness and high likelihood that organisms will wander off of the least costs corridor that the highest theta mimics. 
+
+$\color{red}{\text{Stellar. +5}}$
+
 
 
 # Challenge 4 (5 points)
@@ -480,3 +489,6 @@ PC original = 0.00595698, removing 6 = 0.005961139, removing 7 = 0.005632307
 It makes sense that removing patch 7 had a bigger effect and decreased the IIC and PC more than patch 6 or the original, as patch 7 had the highest degree of connectivity amongst all of the patches. 
 
 However, all of these values are essentially 0, indicating low connectivity and not much habitat. 
+
+$\color{red}{\text{Excellent work, Claire! +5}}$
+
