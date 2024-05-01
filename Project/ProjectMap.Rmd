@@ -1,0 +1,56 @@
+---
+  title: "R Notebook"
+output:
+  html_document:
+  df_print: paged
+---
+## Getting set up
+```{r}
+#I am assuming that this needs all of the packages required in the Rmd file from lab. 
+require(sf)
+require(terra)
+require(raster)
+require(ggOceanMaps)
+
+# Read in species distribution data downloaded from IUCN redlist
+A_sax_dist = st_read('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/redlist_species_data_7110df13-c1f4-4b2f-9342-598f925c5d03/data_0.shp')
+
+A_tro_dist = st_read('/vsicurl/https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/redlist_species_data_48c00095-da02-43fa-a90d-5f9a41331177/data_0.shp')
+
+#Pulling from github
+
+occ_sax = read.csv('https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/observations-396470.csv')
+
+
+occ_tro = read.csv('https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Week2/observations-396472.csv')
+
+sampling = read.csv('https://raw.githubusercontent.com/C-Tracy/SpatialEcology/main/Project/GenomeSampling.csv')
+sampling_sf = st_as_sf(sampling, coords=c('Longitude', 'Latitude'), na.fail = FALSE, crs='+proj=longlat +datum=WGS84 +units=m +no_defs +type=crs')
+
+
+occ_comb = rbind(occ_sax, occ_tro)
+
+occ_comb_sf = st_as_sf(occ_comb, coords=c('longitude', 'latitude'), na.fail = FALSE, crs='+proj=longlat +datum=WGS84 +units=m +no_defs +type=crs')
+
+
+#create bbox based on locality records from inat
+studyArea = st_bbox(occ_comb_sf)
+studyArea = studyArea +  c(-10, -10, 10, 10)
+studyArea = st_as_sfc(studyArea)
+
+#checking projections
+crs(occ_comb_sf, proj=T)
+crs(A_tro_dist, proj=T)
+
+bbox <- st_bbox(c(xmin = -135, ymin = -50, xmax = -30, ymax = 50), crs = st_crs(occ_comb_sf))
+A_sax_dist_crop = st_crop(A_sax_dist, bbox)
+
+
+#Map plot into file in working directory
+png(file="Distribution_Occ_Plot.png", units="in", width=5, height=4, res=300)
+basemap(limits = c(-135, -30, -50, 50), bathymetry = TRUE) + 
+  geom_sf(data = A_tro_dist, fill = '#795695', color = '#795695') + 
+  geom_sf(data = A_sax_dist_crop, fill = '#eb6262', color = '#eb6262') +
+  geom_sf(data = sampling_sf, fill = "black", color = "black", size=1)
+dev.off()
+```
