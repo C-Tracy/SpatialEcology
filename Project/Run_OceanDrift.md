@@ -9,25 +9,7 @@ from datetime import datetime, timedelta, date
 o = PelagicEggDrift(loglevel=20) 
 ```
 
-Add readers from data downloaded from OSCAR for 07 2023
-```python3
-o.add_readers_from_list(['https://tds.hycom.org/thredds/dodsC/GLBy0.08/latest', 'https://pae-paha.pacioos.hawaii.edu/thredds/dodsC/ncep_global/NCEP_Global_Atmospheric_Model_best.ncd', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2023/oscar_vel11222.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2023/oscar_vel11227.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2023/oscar_vel11232.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2023/oscar_vel11237.nc'])
-```
 
-Add readers from data downloaded from OSCAR final dataset for 07 2020
-Not using other datasets (not in Juliandate, but I think these nc files are
-```python3
-o.add_readers_from_list(['/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200701.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200702.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200703.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200704.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200705.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200706.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200707.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200708.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200709.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200710.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200711.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200712.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200713.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200714.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/oscar_currents_final_20200715.nc'])
-
-o.add_readers_from_list(['/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2020/combined.nc'])
-
-```
-
-Trying readers for oscar nrt dataset for july 2021
-```
-o.add_readers_from_list(['/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210701.nc','/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210702.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210703.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210704.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210705.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210706.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210707.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210708.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210709.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210710.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210711.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210712.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210713.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210714.nc', '/Users/claire/Dropbox/Classes/Spatial_Ecology/Project/data_07_2021/oscar_currents_nrt_20210715.nc'])
-
-```
 
 The following readers are those used by the OpenDrift GUI. Most were out of range for the study area, or out of the desired timeframe
 ```python3
@@ -63,7 +45,7 @@ o.seed_elements(-79.880314, 15.83924, z=-1, radius=2000, number=500,
 ```
 
 Seeding additional populations for backwards-in-time simulations, and starting at the 15th rather than the 1st. Again you can change the time variable to your desired start time for your simulation. 
-```
+```python3
 import datetime
 
 time=datetime.datetime(2023, 7, 15)
@@ -105,7 +87,7 @@ o.run(duration=timedelta(hours=-336), time_step=-3600, outfile='pelagiceggdrift_
 
 
 Run the analysis, 
-```
+```python3
 
 o.run(duration=timedelta(hours=336), time_step=3600, outfile='pelagiceggdrift_14d_Jul12023.nc')
 ```
