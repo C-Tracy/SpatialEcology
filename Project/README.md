@@ -11,6 +11,10 @@ pip install podaac-data-subscriber
 conda install -c conda-forge cdo
 ```
 
+# The following lines of code are notes for CBT and are not yet working. 
+
+The data download works, however the date format needs to be reformatted before loading into OpenDrift which I was not successful as this netCDF file format is weird to work with, and opendrift isn't the most clear on the errors provided
+
 ## Downloading OSCAR Ocean Current Data
 ```{bash}
 #set start and end date to your desired range
