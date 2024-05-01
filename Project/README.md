@@ -11,6 +11,12 @@ pip install podaac-data-subscriber
 conda install -c conda-forge cdo
 ```
 
+## Contents of Project Folder
+1. Run_OceanDrift.md: Markdown file with code walk-through of how to run forward in time simulations for a single time period.
+2. Run_OpenDrift_Backwards.md: Markdown file with code walk-through to run backwards in time simulations for a single time period.
+3. ProjectMap.Rmd: Script to recreate map for project with species distributions and sampling sites for genomic data.
+4. GenomeSampling.csv: File used in ProjectMap.Rmd to provide the lat/long for sampling sites for genomic data. 
+
 # The following lines of code are notes for CBT and are not yet working. 
 
 The data download works, however the date format needs to be reformatted before loading into OpenDrift which I was not successful as this netCDF file format is weird to work with, and opendrift isn't the most clear on the errors provided
