@@ -1,4 +1,6 @@
-Scripts for running OpenDrift in python
+# Scripts for running OpenDrift in python
+
+## Forward in time analysis for July 1-14, 2023. Change the time variable to change the start time, and change the timedelta(hours=XX) variable to change the duration of the run.
 
 ```python3
 python3
