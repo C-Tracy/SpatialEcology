@@ -34,7 +34,7 @@ The following readers are those used by the OpenDrift GUI. Most were out of rang
 o.add_readers_from_list(['/vol/vvfelles/opendrift/forcing_data/norkyst/norkyst_aggregate.nc', '/vol/vvfelles/opendrift/forcing_data/meps/meps_aggregate.nc', '/vol/vvfelles/opendrift/forcing_data/ecmwf/ecmwf_aggregate.nc', '/lustre/storeB/project/metproduction/products/norkyst/NorKyst-800m_ZDEPTHS_his_00.nc', '/lustre/storeB/project/metproduction/products/meps/thredds/latest/meps_lagged_6_h_latest_2_5km_latest.nc', 'https://thredds.met.no/thredds/dodsC/sea/norkyst800m/1h/aggregate_be', 'https://thredds.met.no/thredds/dodsC/mepslatest/meps_lagged_6_h_latest_2_5km_latest.nc', 'https://thredds.met.no/thredds/dodsC/fou-hi/barents_eps_zdepth_be', 'https://thredds.met.no/thredds/dodsC/cmems/mywavewam3km/dataset-wam-arctic-1hr3km-be.ncml', 'https://thredds.met.no/thredds/dodsC/ww3_4km_agg', 'https://thredds.met.no/thredds/dodsC/cmems/topaz6/dataset-topaz6-arc-15min-3km-be.ncml', '/vol/vvfelles/opendrift/forcing_data/topaz6/topaz6_aggregate.nc', 'https://thredds.met.no/thredds/dodsC/aromearcticlatest/latest/arome_arctic_lagged_12_h_latest_2_5km_latest.nc', '/vol/vvfelles/opendrift/forcing_data/aromearctic/aromearctic_aggregate.nc', 'https://nrt.cmems-du.eu/thredds/dodsC/cmems_obs-wind_glo_phy_nrt_l4_0.125deg_PT1H', 'https://pae-paha.pacioos.hawaii.edu/thredds/dodsC/ncep_global/NCEP_Global_Atmospheric_Model_best.ncd', 'https://nrt.cmems-du.eu/thredds/dodsC/cmems_mod_glo_wav_anfc_0.083deg_PT3H-i', 'https://nrt.cmems-du.eu/thredds/dodsC/cmems_mod_glo_phy_anfc_merged-uv_PT1H-i', '/vol/vvfelles/opendrift/forcing_data/mercator/mercator_aggregate.nc', 'https://tds.hycom.org/thredds/dodsC/GLBy0.08/latest', 'https://tds.hycom.org/thredds/dodsC/GLBy0.08/expt_93.0/uv3z'])
 ```
 
-
+Here you will have to change the time variable to your desired start-time that populations will be seeded at. 
 ```python3
 import datetime
 time=datetime.datetime(2023, 7, 1)
@@ -62,14 +62,12 @@ o.seed_elements(-79.880314, 15.83924, z=-1, radius=2000, number=500,
                 time=time, diameter=0.0014, neutral_buoyancy_salinity=31.25)
 ```
 
-Seeding additional populations for backwards-in-time simulations:
+Seeding additional populations for backwards-in-time simulations, and starting at the 15th rather than the 1st. Again you can change the time variable to your desired start time for your simulation. 
 ```
 import datetime
 
 time=datetime.datetime(2023, 7, 15)
-time=datetime.datetime(2023, 7, 29)
-time=datetime.datetime(2023, 8, 15)
-time=datetime.datetime(2023, 8, 29)
+
 
 o.seed_elements(-77.15568, 17.6825, z=-1, radius=2000, number=500,
                 time=time, diameter=0.0014, neutral_buoyancy_salinity=31.25)
@@ -106,9 +104,8 @@ o.run(duration=timedelta(hours=-336), time_step=-3600, outfile='pelagiceggdrift_
 ```
 
 
+Run the analysis, 
 ```
-o.run(duration=timedelta(hours=50), time_step=3600)
-
 
 o.run(duration=timedelta(hours=336), time_step=3600, outfile='pelagiceggdrift_14d_Jul12023.nc')
 ```
